@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 class StopcovidApplicationTests {
 
     @Test
-    void contextLoads() {
+    void test() {
         assertTrue("true",true);
     }
 
