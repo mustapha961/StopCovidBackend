@@ -12,21 +12,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/test")
-public class CitoyenController {
+@RequestMapping("")
+public class HelloController {
 
-    @Autowired
-    private CitoyenService citoyenServ;
 
-    @GetMapping("/ok")
-    public Citoyen test2(){
-        Citoyen citoyen = citoyenServ.addCitoyen(new Citoyen(UUID.randomUUID(), EtatCitoyen.EN_BONNE_SANTE));
-        return citoyen;
-    }
 
     @GetMapping("")
-    public List<Citoyen> test(){
-        return citoyenServ.getAllCitoyens();
+    public String test2(){
+        return "Hello jeune citoyen";
     }
 
 }
