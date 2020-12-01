@@ -25,11 +25,12 @@ public class HelloController {
         return "Hello jeune citoyen";
     }
 
+
     @GetMapping("/env")
     @CrossOrigin
     public String test3(){
         Map<String, String> env = System.getenv();
-        return env.get("env")+" ENVIRONMENT "+env.toString();
+        return env.get("env")+" ENVIRONMENT ";
     }
 
 }
