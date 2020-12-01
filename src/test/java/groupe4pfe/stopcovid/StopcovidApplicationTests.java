@@ -1,16 +1,17 @@
 package groupe4pfe.stopcovid;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 @SpringBootTest
 class StopcovidApplicationTests {
 
     @Test
     void test() {
-        assertTrue(false);
+        assertEquals(2, 3);
     }
+
 
 }
