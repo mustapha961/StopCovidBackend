@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +23,13 @@ public class HelloController {
     @CrossOrigin
     public String test2(){
         return "Hello jeune citoyen";
+    }
+
+    @GetMapping("/env")
+    @CrossOrigin
+    public String test3(){
+        Map<String, String> env = System.getenv();
+        return env.get("env")+" ENVIRONMENT";
     }
 
 }
