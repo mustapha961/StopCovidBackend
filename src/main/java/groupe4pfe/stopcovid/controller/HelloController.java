@@ -29,7 +29,7 @@ public class HelloController {
     @CrossOrigin
     public String test3(){
         Map<String, String> env = System.getenv();
-        return env.get("env")+" ENVIRONMENT";
+        return env.get("env")+" ENVIRONMENT "+env.toString();
     }
 
 }
