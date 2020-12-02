@@ -10,6 +10,7 @@ public class Citoyen {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
+    @Enumerated(EnumType.ORDINAL)
     private EtatCitoyen etat;
 
     public Citoyen(){
