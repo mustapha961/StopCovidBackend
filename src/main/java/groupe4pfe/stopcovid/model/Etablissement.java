@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "etablissement")
+@Table(name = "etablissements")
 public class Etablissement {
 
     @Id
@@ -24,7 +24,7 @@ public class Etablissement {
     private Set<Lieu> lieux;
 
 
-    public Etablissement(Long id,String nom,String adresse,String email,String mot_de_passe){
+    public Etablissement(String nom,String adresse,String email,String mot_de_passe){
         this.id = id;
         this.nom = nom;
         this.adresse = adresse;

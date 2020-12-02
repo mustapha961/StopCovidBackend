@@ -1,6 +1,8 @@
 package groupe4pfe.stopcovid.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,13 +21,16 @@ public class Medecin {
 
     private String mot_de_passe;
 
+    @OneToMany(mappedBy="medecin")
+    private Set<QRCodeMedecin> QRCodeMedecins;
 
-    public Medecin(Long id,String nom,String prenom,String email,String mot_de_passe){
-        this.id = id;
+
+    public Medecin(String nom,String prenom,String email,String mot_de_passe){
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.mot_de_passe = mot_de_passe;
+        this.QRCodeMedecins = new HashSet<QRCodeMedecin>();
     }
 
     public Medecin() {
@@ -52,6 +57,10 @@ public class Medecin {
         return prenom;
     }
 
+    public Set<QRCodeMedecin> getQRCodeMedecins() {
+        return QRCodeMedecins;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -70,5 +79,9 @@ public class Medecin {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public void setQRCodeMedecins(Set<QRCodeMedecin> QRCodeMedecins) {
+        this.QRCodeMedecins = QRCodeMedecins;
     }
 }

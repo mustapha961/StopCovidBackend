@@ -1,6 +1,8 @@
 package groupe4pfe.stopcovid.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @IdClass(LieuId.class)
@@ -17,15 +19,18 @@ public class Lieu {
 
     @Id
     @ManyToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name="id")
     private Etablissement etablissement;
+
+    @OneToOne(mappedBy="lieu")
+    private QRCodeEtablissement QRCodeEtablissement;
 
     public Lieu() {}
 
-    public Lieu(Long id,String nom, String description){
-        this.id = id;
+    public Lieu(String nom, String description){
         this.nom = nom;
         this.descritpion = description;
+        this.QRCodeEtablissement = new QRCodeEtablissement();
     }
 
     public Long getId() {
@@ -44,6 +49,10 @@ public class Lieu {
         return etablissement;
     }
 
+    public QRCodeEtablissement getQRCodeEtablissements() {
+        return QRCodeEtablissement;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -58,5 +67,9 @@ public class Lieu {
 
     public void setEtablissement(Etablissement etablissement) {
         this.etablissement = etablissement;
+    }
+
+    public void setQRCodeEtablissement(QRCodeEtablissement QRCodeEtablissements) {
+        this.QRCodeEtablissement = QRCodeEtablissement;
     }
 }
