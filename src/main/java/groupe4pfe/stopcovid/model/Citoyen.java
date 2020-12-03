@@ -1,65 +1,40 @@
 package groupe4pfe.stopcovid.model;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "citoyens")
 public class Citoyen {
-    @Id
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
 
-    @Enumerated(EnumType.ORDINAL)
-    private EtatCitoyen etat;
+  @Id
+  @Column(columnDefinition = "BINARY(16)")
+  private UUID id;
 
-    @OneToMany(mappedBy="citoyen")
-    private Set<ScanQRCodeEtablissement> scansQRCodeEtablissements;
+  private EtatCitoyen etat;
 
-    @OneToMany(mappedBy="citoyen")
-    private Set<ScanQRCodeMedecin> scansQRCodeMedecins;
+  public Citoyen() {}
 
-    public Citoyen(){
-    }
+  public Citoyen(UUID id, EtatCitoyen etat) {
+    this.id = id;
+    this.etat = etat;
+  }
 
-    public Citoyen(UUID id,EtatCitoyen etat){
-        this.id = id;
-        this.etat = etat;
-        this.scansQRCodeEtablissements = new HashSet<ScanQRCodeEtablissement>();
-        this.scansQRCodeMedecins = new HashSet<ScanQRCodeMedecin>();
-    }
+  public EtatCitoyen getEtat() {
+    return etat;
+  }
 
-    public Set<ScanQRCodeEtablissement> getScansQRCodeEtablissements() {
-        return scansQRCodeEtablissements;
-    }
+  public UUID getId() {
+    return id;
+  }
 
-    public Set<ScanQRCodeMedecin> getScansQRCodeMedecins() {
-        return scansQRCodeMedecins;
-    }
+  public void setEtat(EtatCitoyen etat) {
+    this.etat = etat;
+  }
 
-    public EtatCitoyen getEtat() {
-        return etat;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setScansQRCodeEtablissements(Set<ScanQRCodeEtablissement> scansQRCodeEtablissements) {
-        this.scansQRCodeEtablissements = scansQRCodeEtablissements;
-    }
-
-    public void setScansQRCodeMedecins(Set<ScanQRCodeMedecin> scansQRCodeMedecins) {
-        this.scansQRCodeMedecins = scansQRCodeMedecins;
-    }
-
-    public void setEtat(EtatCitoyen etat) {
-        this.etat = etat;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
+  public void setId(UUID id) {
+    this.id = id;
+  }
 }

@@ -8,10 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class StopcovidApplicationTests {
 
-    @Test
-    void test() {
-        assertEquals(2, 2);
-    }
-
-
+  @Test
+  void test() {
+    assertEquals(2, 2);
+  }
 }

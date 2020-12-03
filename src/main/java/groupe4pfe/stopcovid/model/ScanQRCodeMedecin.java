@@ -1,63 +1,43 @@
 package groupe4pfe.stopcovid.model;
 
-import javax.persistence.*;
+import groupe4pfe.stopcovid.model.indentities.ScanQrCodeMedecinIndentity;
 import java.sql.Date;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "scansQRCodeMedecins")
 public class ScanQRCodeMedecin {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+  @EmbeddedId
+  private ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity;
 
-    private Date date;
+  private Date date;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id",referencedColumnName = "id")
-    private QRCodeMedecin QRCode;
+  public ScanQRCodeMedecin() {}
 
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Citoyen citoyen;
+  public ScanQRCodeMedecin(
+    ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity,
+    Date date
+  ) {
+    this.scanQrCodeMedecinIndentity = scanQrCodeMedecinIndentity;
+    this.date = date;
+  }
 
-    public ScanQRCodeMedecin(){}
+  public ScanQrCodeMedecinIndentity getScanQrCodeMedecinIndentity() {
+    return scanQrCodeMedecinIndentity;
+  }
 
-    public ScanQRCodeMedecin(Date date,QRCodeMedecin QRCode, Citoyen citoyen){
-        this.date = date;
-        this.QRCode = QRCode;
-        this.citoyen = citoyen;
-    }
+  public void setScanQrCodeMedecinIndentity(
+    ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity
+  ) {
+    this.scanQrCodeMedecinIndentity = scanQrCodeMedecinIndentity;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Date getDate() {
+    return date;
+  }
 
-    public Citoyen getCitoyen() {
-        return citoyen;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public QRCodeMedecin getQRCode() {
-        return QRCode;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setQRCode(QRCodeMedecin QRCode) {
-        this.QRCode = QRCode;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setCitoyen(Citoyen citoyen) {
-        this.citoyen = citoyen;
-    }
+  public void setDate(Date date) {
+    this.date = date;
+  }
 }

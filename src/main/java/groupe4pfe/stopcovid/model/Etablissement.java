@@ -1,87 +1,77 @@
 package groupe4pfe.stopcovid.model;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "etablissements")
 public class Etablissement {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    private String nom;
+  private String nom;
 
-    private String adresse;
+  private String adresse;
 
-    private String email;
+  private String email;
 
-    private String mot_de_passe;
+  private String mot_de_passe;
 
-    @OneToMany(mappedBy="etablissement")
-    private Set<Lieu> lieux;
+  public Etablissement(
+    String nom,
+    String adresse,
+    String email,
+    String mot_de_passe
+  ) {
+    this.id = id;
+    this.nom = nom;
+    this.adresse = adresse;
+    this.email = email;
+    this.mot_de_passe = mot_de_passe;
+  }
 
+  public Etablissement() {}
 
-    public Etablissement(String nom,String adresse,String email,String mot_de_passe){
-        this.id = id;
-        this.nom = nom;
-        this.adresse = adresse;
-        this.email = email;
-        this.mot_de_passe = mot_de_passe;
-        this.lieux = new HashSet<>();
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public Etablissement() {
+  public String getMot_de_passe() {
+    return mot_de_passe;
+  }
 
-    }
+  public String getNom() {
+    return nom;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getMot_de_passe() {
-        return mot_de_passe;
-    }
+  public String getAdresse() {
+    return adresse;
+  }
 
-    public String getNom() {
-        return nom;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public void setMot_de_passe(String mot_de_passe) {
+    this.mot_de_passe = mot_de_passe;
+  }
 
-    public String getAdresse() {
-        return adresse;
-    }
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
 
-    public Set<Lieu> getLieux() {
-        return lieux;
-    }
+  public void setAdresse(String adresse) {
+    this.adresse = adresse;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setMot_de_passe(String mot_de_passe) {
-        this.mot_de_passe = mot_de_passe;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setLieux(Set<Lieu> lieux) {
-        this.lieux = lieux;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 }

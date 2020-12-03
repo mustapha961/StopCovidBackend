@@ -1,75 +1,61 @@
 package groupe4pfe.stopcovid.model;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
-@IdClass(LieuId.class)
 @Table(name = "lieux")
 public class Lieu {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    private String nom;
+  private String nom;
 
-    private String descritpion;
+  private String descritpion;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name="id")
-    private Etablissement etablissement;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "etablissements_id", nullable = false)
+  private Etablissement etablissement;
 
-    @OneToOne(mappedBy="lieu")
-    private QRCodeEtablissement QRCodeEtablissement;
+  public Lieu() {}
 
-    public Lieu() {}
+  public Lieu(String nom, String description) {
+    this.nom = nom;
+    this.descritpion = description;
+  }
 
-    public Lieu(String nom, String description){
-        this.nom = nom;
-        this.descritpion = description;
-        this.QRCodeEtablissement = new QRCodeEtablissement();
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public String getNom() {
+    return nom;
+  }
 
-    public String getNom() {
-        return nom;
-    }
+  public String getDescritpion() {
+    return descritpion;
+  }
 
-    public String getDescritpion() {
-        return descritpion;
-    }
+  public Etablissement getEtablissement() {
+    return etablissement;
+  }
 
-    public Etablissement getEtablissement() {
-        return etablissement;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public QRCodeEtablissement getQRCodeEtablissements() {
-        return QRCodeEtablissement;
-    }
+  public void setNom(String nom) {
+    this.nom = nom;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setDescritpion(String descritpion) {
+    this.descritpion = descritpion;
+  }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setDescritpion(String descritpion) {
-        this.descritpion = descritpion;
-    }
-
-    public void setEtablissement(Etablissement etablissement) {
-        this.etablissement = etablissement;
-    }
-
-    public void setQRCodeEtablissement(QRCodeEtablissement QRCodeEtablissements) {
-        this.QRCodeEtablissement = QRCodeEtablissement;
-    }
+  public void setEtablissement(Etablissement etablissement) {
+    this.etablissement = etablissement;
+  }
 }
