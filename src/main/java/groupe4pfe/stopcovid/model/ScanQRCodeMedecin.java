@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
+@IdClass(ScanQRCodeMedecinId.class)
 @Table(name = "scansQRCodeMedecins")
 public class ScanQRCodeMedecin {
 
@@ -17,6 +18,7 @@ public class ScanQRCodeMedecin {
     @JoinColumn(name="id",referencedColumnName = "id")
     private QRCodeMedecin QRCode;
 
+    @Id
     @ManyToOne
     @JoinColumn(name="id")
     private Citoyen citoyen;
