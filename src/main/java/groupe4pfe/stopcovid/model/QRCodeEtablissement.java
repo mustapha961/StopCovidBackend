@@ -1,63 +1,51 @@
 package groupe4pfe.stopcovid.model;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
-@Table(name="QRCodeEtablissements")
+@Table(name = "QRCodeEtablissements")
 public class QRCodeEtablissement {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "lieu", referencedColumnName = "id", nullable=false)
-    private Lieu lieu;
+  private String contenu;
 
-    private String contenu;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "lieux_id", referencedColumnName = "id", nullable = false)
+  private Lieu lieu;
 
-    @OneToMany(mappedBy="QRCode")
-    private Set<ScanQRCodeEtablissement> scansQRCodeEtablissements;
+  public QRCodeEtablissement() {}
 
-    public QRCodeEtablissement(){}
+  public QRCodeEtablissement(String contenu) {
+    //this.lieu = lieu;
+    this.contenu = contenu;
+  }
 
-    public QRCodeEtablissement(Lieu lieu, String contenu){
-        this.lieu = lieu;
-        this.contenu = contenu;
-        this.scansQRCodeEtablissements = new HashSet<ScanQRCodeEtablissement>();
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Lieu getLieu() {
+    return lieu;
+  }
 
-    public Lieu getLieu() {
-        return lieu;
-    }
+  public String getContenu() {
+    return contenu;
+  }
 
-    public String getContenu() {
-        return contenu;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public Set<ScanQRCodeEtablissement> getScansQRCodeEtablissements() {
-        return scansQRCodeEtablissements;
-    }
+  public void setContenu(String contenu) {
+    this.contenu = contenu;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setContenu(String contenu) {
-        this.contenu = contenu;
-    }
-
-    public void setLieu(Lieu lieu) {
-        this.lieu = lieu;
-    }
-
-    public void setScansQRCodeEtablissements(Set<ScanQRCodeEtablissement> scansQRCodeEtablissements) {
-        this.scansQRCodeEtablissements = scansQRCodeEtablissements;
-    }
+  public void setLieu(Lieu lieu) {
+    this.lieu = lieu;
+  }
 }

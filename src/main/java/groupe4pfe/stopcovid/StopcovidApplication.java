@@ -12,10 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @RestController
 public class StopcovidApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(StopcovidApplication.class, args);
-    }
-
-
-
+  public static void main(String[] args) {
+    SpringApplication.run(StopcovidApplication.class, args);
+  }
 }
