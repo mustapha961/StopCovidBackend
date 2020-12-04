@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Citoyen {
 
   @Id
-  @Column(columnDefinition = "BINARY(16)")
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
   private EtatCitoyen etat;

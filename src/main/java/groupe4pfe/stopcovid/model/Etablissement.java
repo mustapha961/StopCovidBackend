@@ -26,7 +26,6 @@ public class Etablissement {
     String email,
     String mot_de_passe
   ) {
-    this.id = id;
     this.nom = nom;
     this.adresse = adresse;
     this.email = email;
