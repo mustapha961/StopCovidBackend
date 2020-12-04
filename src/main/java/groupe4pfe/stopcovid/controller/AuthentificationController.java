@@ -7,6 +7,7 @@ import groupe4pfe.stopcovid.dto.response.AuthentificationResponse;
 import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.dto.response.ResponseError;
 import groupe4pfe.stopcovid.exceptions.LoginException;
+import groupe4pfe.stopcovid.exceptions.RegisterException;
 import groupe4pfe.stopcovid.model.Medecin;
 import groupe4pfe.stopcovid.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AuthentificationController {
     try{
       AuthentificationResponse authentificationResponse = authService.signUpMedecin(registermedecin);
       return ResponseEntity.status(OK).body(authentificationResponse);
-    }catch (LoginException e){
+    }catch (RegisterException e){
       return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
     }
 
@@ -49,7 +50,7 @@ public class AuthentificationController {
     try{
       AuthentificationResponse authentificationResponse = authService.signUpEtablissement(registermedecin);
       return ResponseEntity.status(OK).body(authentificationResponse);
-    }catch (LoginException e){
+    }catch (RegisterException e){
       return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
     }
   }
