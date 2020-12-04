@@ -13,10 +13,7 @@ import groupe4pfe.stopcovid.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -29,6 +26,7 @@ public class AuthentificationController {
   private AuthService authService;
 
   @PostMapping("/register/medecin")
+  @CrossOrigin
   public ResponseEntity<?> signupMedecin(
     @RequestBody RegisterRequestMedecinDto registermedecin
   ) {
@@ -43,6 +41,7 @@ public class AuthentificationController {
   }
 
   @PostMapping("/register/etablissement")
+  @CrossOrigin
   public ResponseEntity<?> signupEtablissement(
           @RequestBody RegisterRequestEtablissementDto registermedecin
   )
@@ -56,12 +55,14 @@ public class AuthentificationController {
   }
 
   @PostMapping("/register/citoyen")
+  @CrossOrigin
   public ResponseEntity<AuthentificationResponse> signupCitoyen() {
 
     return ResponseEntity.status(OK).body(authService.signUpCitoyen());
   }
 
   @PostMapping("/login/medecin")
+  @CrossOrigin
   public ResponseEntity<?> loginMedecin(@RequestBody LoginRequest loginRequest){
     try{
       LoginResponse loginResponse =authService.loginMedecin(loginRequest);
@@ -73,6 +74,7 @@ public class AuthentificationController {
   }
 
   @PostMapping("/login/etablissement")
+  @CrossOrigin
   public ResponseEntity<?> loginEtablissement(@RequestBody LoginRequest loginRequest){
     try{
       LoginResponse loginResponse = authService.loginEtablissement(loginRequest);
