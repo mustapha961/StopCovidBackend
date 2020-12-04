@@ -75,7 +75,7 @@ public class AuthService {
     Etablissement etablissement = new Etablissement(
             registerRequestEtablissementDto.getNom(),
             registerRequestEtablissementDto.getAdresse(),
-            registerRequestEtablissementDto.getAdresse(),
+            registerRequestEtablissementDto.getEmail(),
             password);
 
     etablissement = etablissementRepository.save(etablissement);
@@ -132,8 +132,8 @@ public class AuthService {
   }
 
   private boolean emailAlreadyExists(String email){
-    return medecinRepository.findByEmail(email).orElse(null) == null &&
-              etablissementRepository.findByEmail(email).orElse(null) == null;
+    return !(medecinRepository.findByEmail(email).orElse(null) == null &&
+              etablissementRepository.findByEmail(email).orElse(null) == null);
   }
 
 }
