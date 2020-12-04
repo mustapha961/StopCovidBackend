@@ -25,6 +25,6 @@ public class HelloController {
   public String test3() {
     Map<String, String> env = System.getenv();
     Medecin medecin = authService.getCurrentMedecin();
-    return env.get("env") + " ENVIRONMENT ";
+    return env.get("env") + " ENVIRONMENT";
   }
 }
