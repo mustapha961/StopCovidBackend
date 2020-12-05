@@ -21,6 +21,7 @@ public class LieuxController {
     private LieuxServices lieuxServices;
 
     @GetMapping("")
+    @CrossOrigin
     public ResponseEntity<?> getAllLieux(){
         try {
             List<LieuxQrCodeDto> lieuxQrCodeDtoList = lieuxServices.getLieux();
@@ -31,6 +32,7 @@ public class LieuxController {
     }
 
     @PostMapping("")
+    @CrossOrigin
     public ResponseEntity<?> insererLieux(@RequestBody LieuDto lieuDto){
         try {
             LieuxQrCodeDto lieuxQrCodeDto = lieuxServices.insererLieu(lieuDto);
@@ -39,6 +41,4 @@ public class LieuxController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseError(e.getMessage()));
         }
     }
-
-
 }
