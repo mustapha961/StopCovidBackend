@@ -1,7 +1,6 @@
 package groupe4pfe.stopcovid.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 import javax.persistence.*;
 
 @Entity
@@ -20,11 +19,11 @@ public class QRCodeMedecin {
   )
   private Medecin medecin;
 
-  private String contenu;
+  private UUID contenu;
 
   public QRCodeMedecin() {}
 
-  public QRCodeMedecin(Medecin medecin, String contenu) {
+  public QRCodeMedecin(Medecin medecin, UUID contenu) {
     this.medecin = medecin;
     this.contenu = contenu;
   }
@@ -33,7 +32,7 @@ public class QRCodeMedecin {
     return id;
   }
 
-  public String getContenu() {
+  public UUID getContenu() {
     return contenu;
   }
 
@@ -45,7 +44,7 @@ public class QRCodeMedecin {
     this.id = id;
   }
 
-  public void setContenu(String contenu) {
+  public void setContenu(UUID contenu) {
     this.contenu = contenu;
   }
 
