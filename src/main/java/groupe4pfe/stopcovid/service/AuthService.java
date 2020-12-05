@@ -118,16 +118,22 @@ public class AuthService {
 
   public Medecin getCurrentMedecin (){
     User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal == null)
+      return null;
     return medecinRepository.findByEmail(principal.getUsername()).orElse(null);
   }
 
   public Citoyen getCurrentCitoyen(){
     User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal == null)
+      return null;
     return citoyenRepository.findById(UUID.fromString(principal.getUsername())).orElse(null);
   }
 
   public Etablissement getCurrentEtablissement(){
     User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal == null)
+      return null;
     return etablissementRepository.findByEmail(principal.getUsername()).orElse(null);
   }
 

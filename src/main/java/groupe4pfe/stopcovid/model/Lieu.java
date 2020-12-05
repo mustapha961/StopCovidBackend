@@ -1,7 +1,5 @@
 package groupe4pfe.stopcovid.model;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -14,17 +12,38 @@ public class Lieu {
 
   private String nom;
 
-  private String descritpion;
+  private String description;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "etablissements_id", nullable = false)
   private Etablissement etablissement;
 
-  public Lieu() {}
+  private String qrCode;
 
-  public Lieu(String nom, String description) {
+  public Lieu(Etablissement etablissement, String nom, String description, String qrCode) {
+    this.etablissement= etablissement;
     this.nom = nom;
-    this.descritpion = description;
+    this.description = description;
+    this.qrCode = qrCode;
+  }
+
+  public Lieu(){ }
+
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getQrCode() {
+    return qrCode;
+  }
+
+  public void setQrCode(String qrCode) {
+    this.qrCode = qrCode;
   }
 
   public Long getId() {
@@ -33,10 +52,6 @@ public class Lieu {
 
   public String getNom() {
     return nom;
-  }
-
-  public String getDescritpion() {
-    return descritpion;
   }
 
   public Etablissement getEtablissement() {
@@ -51,11 +66,18 @@ public class Lieu {
     this.nom = nom;
   }
 
-  public void setDescritpion(String descritpion) {
-    this.descritpion = descritpion;
-  }
-
   public void setEtablissement(Etablissement etablissement) {
     this.etablissement = etablissement;
+  }
+
+  @Override
+  public String toString() {
+    return "Lieu{" +
+            "id=" + id +
+            ", nom='" + nom + '\'' +
+            ", description='" + description + '\'' +
+            ", etablissement=" + etablissement.getId() +
+            ", qrCode='" + qrCode + '\'' +
+            '}';
   }
 }

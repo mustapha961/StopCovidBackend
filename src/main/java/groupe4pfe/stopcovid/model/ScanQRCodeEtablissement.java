@@ -13,11 +13,11 @@ public class ScanQRCodeEtablissement {
 
   private Date date_entree;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "QRCodeEtablissement_id", referencedColumnName = "id")
-  private QRCodeEtablissement QRCode;
+  @ManyToOne
+  @JoinColumn(name = "lieu_id", referencedColumnName = "id",nullable = false)
+  private Lieu lieu;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "citoyen_id", referencedColumnName = "id")
   private Citoyen citoyen;
 
@@ -26,12 +26,12 @@ public class ScanQRCodeEtablissement {
   public ScanQRCodeEtablissement(
     Long id,
     Date date_entree,
-    QRCodeEtablissement QRCode,
+    Lieu lieu,
     Citoyen citoyen
   ) {
     this.id = id;
     this.date_entree = date_entree;
-    this.QRCode = QRCode;
+    this.lieu = lieu;
     this.citoyen = citoyen;
   }
 
@@ -47,8 +47,8 @@ public class ScanQRCodeEtablissement {
     return date_entree;
   }
 
-  public QRCodeEtablissement getQRCode() {
-    return QRCode;
+  public Lieu getLieu() {
+    return lieu;
   }
 
   public void setId(Long id) {
@@ -63,7 +63,7 @@ public class ScanQRCodeEtablissement {
     this.date_entree = date_entree;
   }
 
-  public void setQRCode(QRCodeEtablissement QRCode) {
-    this.QRCode = QRCode;
+  public void setLieu(Lieu lieu) {
+    this.lieu = lieu;
   }
 }

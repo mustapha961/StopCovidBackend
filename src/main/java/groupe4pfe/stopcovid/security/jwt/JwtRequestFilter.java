@@ -44,35 +44,34 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
         String role = null;
         String id = null;
-
+        System.out.println(authorizationHeader);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
             email = jwtUtil.extractEmail(jwt);
             id = jwtUtil.extractId(jwt);
             role = jwtUtil.extractRole(jwt);
-        }
 
-        if ((email != null || id != null) && role != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if ((email != null || id != null) && role != null ) {
+                UserDetails userDetails = null;
+                if (role.equals("etablissement")) {
+                    userDetails = this.etablissementDetailsService.loadUserByUsername(email);
+                } else if (role.equals("citoyen")) {
+                    userDetails = this.citoyenDetailsService.loadUserByUsername(id);
+                } else {
+                    userDetails = this.medecinDetailsService.loadUserByUsername(email);
 
-            UserDetails userDetails = null;
-            if(role.equals("etablissement")){
-                userDetails = this.etablissementDetailsService.loadUserByUsername(email);
-            }else if(role.equals("citoyen")){
-                userDetails = this.citoyenDetailsService.loadUserByUsername(id);
-            }else{
-                userDetails = this.medecinDetailsService.loadUserByUsername(email);
+                }
+                String aValider = email.equals("") ? id : email;
+                if (jwtUtil.validateToken(aValider, userDetails)) {
 
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                }
             }
 
-            String aValider = email.equals("") ? id : email;
-            if (jwtUtil.validateToken(aValider, userDetails)) {
-
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            }
         }
 
         chain.doFilter(request, response);
