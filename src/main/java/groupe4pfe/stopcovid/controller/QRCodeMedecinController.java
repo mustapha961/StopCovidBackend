@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-@RequestMapping("/api/qrcode")
+@RequestMapping("/api/medecin")
 public class QRCodeMedecinController {
 
     @Autowired
     private QRCodeMedecinService QRCodeMedecinService;
 
-    @PostMapping("/medecin")
+    @PostMapping("/qrcode")
+    @CrossOrigin
     public ResponseEntity<?> addQRCodeMedecin(){
         try{
             return ResponseEntity.status(OK).body(QRCodeMedecinService.addQRCodeMedecin());
