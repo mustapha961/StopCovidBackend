@@ -17,14 +17,15 @@ public class HelloController {
   private AuthService authService;
 
   @GetMapping("")
+  @CrossOrigin
   public String test2() {
     return "Hello jeune citoyen";
   }
 
   @GetMapping("/env")
+  @CrossOrigin
   public String test3() {
     Map<String, String> env = System.getenv();
-    Medecin medecin = authService.getCurrentMedecin();
     return env.get("env") + " ENVIRONMENT";
   }
 }
