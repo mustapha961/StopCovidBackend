@@ -1,15 +1,15 @@
 package groupe4pfe.stopcovid.dto;
 
-public class RegisterRequestMedecinDto {
+public class RegisteMedecinDto {
 
   private String nom;
   private String prenom;
   private String email;
   private String password;
 
-  public RegisterRequestMedecinDto() {}
+  public RegisteMedecinDto() {}
 
-  public RegisterRequestMedecinDto(
+  public RegisteMedecinDto(
     String nom,
     String prenom,
     String email,

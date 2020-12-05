@@ -4,13 +4,13 @@ import groupe4pfe.stopcovid.model.QRCodeMedecin;
 
 import java.util.UUID;
 
-public class QRCodeMedecinResponse {
+public class QRCodesMedecinResponse {
 
     private String contenu;
 
-    public QRCodeMedecinResponse(){}
+    public QRCodesMedecinResponse(){}
 
-    public QRCodeMedecinResponse(String contenu){
+    public QRCodesMedecinResponse(String contenu){
         this.contenu = contenu;
     }
 

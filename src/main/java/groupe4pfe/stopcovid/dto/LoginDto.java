@@ -1,13 +1,13 @@
 package groupe4pfe.stopcovid.dto;
 
-public class LoginRequest {
+public class LoginDto {
     private String email;
     private String password;
 
-    public LoginRequest() {
+    public LoginDto() {
     }
 
-    public LoginRequest(String email, String password) {
+    public LoginDto(String email, String password) {
         this.email = email;
         this.password = password;
     }

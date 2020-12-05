@@ -1,13 +1,13 @@
 package groupe4pfe.stopcovid.service;
 
-import groupe4pfe.stopcovid.dto.LoginRequest;
-import groupe4pfe.stopcovid.dto.RegisterRequestEtablissementDto;
+import groupe4pfe.stopcovid.dto.LoginDto;
+import groupe4pfe.stopcovid.dto.RegisterEtablissementDto;
 import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.exceptions.LoginException;
 import groupe4pfe.stopcovid.exceptions.RegisterException;
 import groupe4pfe.stopcovid.model.EtatCitoyen;
 import groupe4pfe.stopcovid.security.Util.JwtUtil;
-import groupe4pfe.stopcovid.dto.RegisterRequestMedecinDto;
+import groupe4pfe.stopcovid.dto.RegisteMedecinDto;
 import groupe4pfe.stopcovid.dto.response.AuthentificationResponse;
 import groupe4pfe.stopcovid.model.Citoyen;
 import groupe4pfe.stopcovid.model.Etablissement;
@@ -41,7 +41,7 @@ public class AuthService {
 
   @Transactional
   public AuthentificationResponse signUpMedecin(
-    RegisterRequestMedecinDto registerRequestMedecinDto
+    RegisteMedecinDto registerRequestMedecinDto
   ) {
 
     if(emailAlreadyExists(registerRequestMedecinDto.getEmail()))
@@ -64,7 +64,7 @@ public class AuthService {
   }
 
   @Transactional
-  public AuthentificationResponse signUpEtablissement(RegisterRequestEtablissementDto registerRequestEtablissementDto){
+  public AuthentificationResponse signUpEtablissement(RegisterEtablissementDto registerRequestEtablissementDto){
     String password = passwordEncoder.encode(
             registerRequestEtablissementDto.getPassword()
     );
@@ -91,7 +91,7 @@ public class AuthService {
     return new AuthentificationResponse(token,null,citoyen.getId().toString());
   }
 
-  public LoginResponse loginMedecin(LoginRequest loginRequest){
+  public LoginResponse loginMedecin(LoginDto loginRequest){
 
     Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("Email or password does not match"));
 
@@ -103,7 +103,7 @@ public class AuthService {
     }
   }
 
-  public LoginResponse loginEtablissement(LoginRequest loginRequest){
+  public LoginResponse loginEtablissement(LoginDto loginRequest){
 
     Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("Email or password does not match"));
 

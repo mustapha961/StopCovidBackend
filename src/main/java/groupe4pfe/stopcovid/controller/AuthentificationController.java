@@ -1,17 +1,15 @@
 package groupe4pfe.stopcovid.controller;
 
-import groupe4pfe.stopcovid.dto.LoginRequest;
-import groupe4pfe.stopcovid.dto.RegisterRequestEtablissementDto;
-import groupe4pfe.stopcovid.dto.RegisterRequestMedecinDto;
+import groupe4pfe.stopcovid.dto.LoginDto;
+import groupe4pfe.stopcovid.dto.RegisterEtablissementDto;
+import groupe4pfe.stopcovid.dto.RegisteMedecinDto;
 import groupe4pfe.stopcovid.dto.response.AuthentificationResponse;
 import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.dto.response.ResponseError;
 import groupe4pfe.stopcovid.exceptions.LoginException;
 import groupe4pfe.stopcovid.exceptions.RegisterException;
-import groupe4pfe.stopcovid.model.Medecin;
 import groupe4pfe.stopcovid.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +26,7 @@ public class AuthentificationController {
   @PostMapping("/register/medecin")
   @CrossOrigin
   public ResponseEntity<?> signupMedecin(
-    @RequestBody RegisterRequestMedecinDto registermedecin
+    @RequestBody RegisteMedecinDto registermedecin
   ) {
     try{
       AuthentificationResponse authentificationResponse = authService.signUpMedecin(registermedecin);
@@ -43,7 +41,7 @@ public class AuthentificationController {
   @PostMapping("/register/etablissement")
   @CrossOrigin
   public ResponseEntity<?> signupEtablissement(
-          @RequestBody RegisterRequestEtablissementDto registermedecin
+          @RequestBody RegisterEtablissementDto registermedecin
   )
   {
     try{
@@ -63,7 +61,7 @@ public class AuthentificationController {
 
   @PostMapping("/login/medecin")
   @CrossOrigin
-  public ResponseEntity<?> loginMedecin(@RequestBody LoginRequest loginRequest){
+  public ResponseEntity<?> loginMedecin(@RequestBody LoginDto loginRequest){
     try{
       LoginResponse loginResponse =authService.loginMedecin(loginRequest);
       return ResponseEntity.status(OK).body(loginResponse);
@@ -75,7 +73,7 @@ public class AuthentificationController {
 
   @PostMapping("/login/etablissement")
   @CrossOrigin
-  public ResponseEntity<?> loginEtablissement(@RequestBody LoginRequest loginRequest){
+  public ResponseEntity<?> loginEtablissement(@RequestBody LoginDto loginRequest){
     try{
       LoginResponse loginResponse = authService.loginEtablissement(loginRequest);
       return ResponseEntity.status(OK).body(authService.loginEtablissement(loginRequest));
