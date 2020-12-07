@@ -25,7 +25,7 @@ public class EtablissementController {
     public ResponseEntity<?> getAllLieux(){
         try {
             List<LieuxQrCodeDto> lieuxQrCodeDtoList = lieuxServices.getLieux();
-            return ResponseEntity.status(HttpStatus.OK).body(new GetLieuxResponse(lieuxQrCodeDtoList));
+            return ResponseEntity.status(HttpStatus.OK).body(lieuxQrCodeDtoList);
         }catch (UnauthorizeException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponseError(e.getMessage()));
         }
