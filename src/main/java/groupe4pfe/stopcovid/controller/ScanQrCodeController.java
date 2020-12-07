@@ -44,8 +44,7 @@ public class ScanQrCodeController {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new CitoyenResponse(citoyen.getId().toString(),citoyen.getEtat().toString()));
         }else{
-            ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseError("QR code inexistant"));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseError("QR code inexistant"));
         }
-        return null;
     }
 }
