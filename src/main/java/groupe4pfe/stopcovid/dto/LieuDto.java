@@ -1,6 +1,7 @@
 package groupe4pfe.stopcovid.dto;
 
 public class LieuDto {
+
     private String nom;
     private String description;
 

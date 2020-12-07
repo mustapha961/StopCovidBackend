@@ -19,11 +19,11 @@ public class QRCodeMedecin {
   )
   private Medecin medecin;
 
-  private UUID contenu;
+  private String contenu;
 
   public QRCodeMedecin() {}
 
-  public QRCodeMedecin(Medecin medecin, UUID contenu) {
+  public QRCodeMedecin(Medecin medecin, String contenu) {
     this.medecin = medecin;
     this.contenu = contenu;
   }
@@ -32,7 +32,7 @@ public class QRCodeMedecin {
     return id;
   }
 
-  public UUID getContenu() {
+  public String getContenu() {
     return contenu;
   }
 
@@ -44,7 +44,7 @@ public class QRCodeMedecin {
     this.id = id;
   }
 
-  public void setContenu(UUID contenu) {
+  public void setContenu(String contenu) {
     this.contenu = contenu;
   }
 

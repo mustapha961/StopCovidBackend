@@ -21,6 +21,8 @@ public class CitoyenDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Citoyen citoyen = citoyenRepository.findById(UUID.fromString(s)).orElse(null);
+        if(citoyen==null)
+            return null;
         return new User(citoyen.getId().toString(),"",new ArrayList<>());
     }
 }

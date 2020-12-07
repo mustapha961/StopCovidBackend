@@ -1,7 +1,9 @@
 package groupe4pfe.stopcovid.model;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "scansQRCodeEtablissements")
@@ -11,26 +13,21 @@ public class ScanQRCodeEtablissement {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private Date date_entree;
+  private Date dateEntree;
 
   @ManyToOne
   @JoinColumn(name = "lieu_id", referencedColumnName = "id",nullable = false)
   private Lieu lieu;
 
+  @JsonManagedReference
   @ManyToOne
-  @JoinColumn(name = "citoyen_id", referencedColumnName = "id")
+  @JoinColumn(name = "citoyen_id", referencedColumnName = "id",nullable = false)
   private Citoyen citoyen;
 
   public ScanQRCodeEtablissement() {}
 
-  public ScanQRCodeEtablissement(
-    Long id,
-    Date date_entree,
-    Lieu lieu,
-    Citoyen citoyen
-  ) {
-    this.id = id;
-    this.date_entree = date_entree;
+  public ScanQRCodeEtablissement(Date date_entree, Lieu lieu, Citoyen citoyen) {
+    this.dateEntree = date_entree;
     this.lieu = lieu;
     this.citoyen = citoyen;
   }
@@ -44,7 +41,7 @@ public class ScanQRCodeEtablissement {
   }
 
   public Date getDate_entree() {
-    return date_entree;
+    return dateEntree;
   }
 
   public Lieu getLieu() {
@@ -60,7 +57,7 @@ public class ScanQRCodeEtablissement {
   }
 
   public void setDate_entree(Date date_entree) {
-    this.date_entree = date_entree;
+    this.dateEntree = date_entree;
   }
 
   public void setLieu(Lieu lieu) {

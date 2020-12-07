@@ -7,6 +7,9 @@ import java.util.Objects;
 import javax.persistence.*;
 
 @Embeddable
+/**
+ * Clé concaténée pour la table ScansQRCodesMedecins
+ */
 public class ScanQrCodeMedecinIndentity implements Serializable {
 
   @OneToOne(fetch = FetchType.LAZY)

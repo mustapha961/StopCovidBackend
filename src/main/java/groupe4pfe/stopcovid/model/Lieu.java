@@ -1,6 +1,7 @@
 package groupe4pfe.stopcovid.model;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "lieux")

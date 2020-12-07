@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class LieuxQrCodeDto {
 
+    private Long id;
     private String nom;
     private String description;
     private String qrCode;
@@ -12,10 +13,19 @@ public class LieuxQrCodeDto {
     public LieuxQrCodeDto() {
     }
 
-    public LieuxQrCodeDto(String nom, String description, String qrCode) {
+    public LieuxQrCodeDto(Long id,String nom, String description, String qrCode) {
+        this.id = id;
         this.nom = nom;
         this.description = description;
         this.qrCode = qrCode;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNom() {

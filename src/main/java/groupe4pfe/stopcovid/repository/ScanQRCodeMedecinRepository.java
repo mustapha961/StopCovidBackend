@@ -6,5 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScanQRCodeMedecinRepository
-  extends CrudRepository<ScanQRCodeMedecin, ScanQrCodeMedecinIndentity> {}
+public interface ScanQRCodeMedecinRepository extends CrudRepository<ScanQRCodeMedecin, ScanQrCodeMedecinIndentity> {
+
+
+
+}

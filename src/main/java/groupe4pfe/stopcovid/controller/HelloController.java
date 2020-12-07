@@ -16,12 +16,6 @@ public class HelloController {
   @Autowired
   private AuthService authService;
 
-  @GetMapping("")
-  @CrossOrigin
-  public String test2() {
-    return "Hello jeune citoyen";
-  }
-
   @GetMapping("/env")
   @CrossOrigin
   public String test3() {

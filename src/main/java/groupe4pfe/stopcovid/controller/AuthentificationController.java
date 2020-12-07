@@ -1,5 +1,7 @@
 package groupe4pfe.stopcovid.controller;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+import groupe4pfe.stopcovid.Utils.FCMService;
 import groupe4pfe.stopcovid.dto.LoginDto;
 import groupe4pfe.stopcovid.dto.RegisterEtablissementDto;
 import groupe4pfe.stopcovid.dto.RegisteMedecinDto;
@@ -13,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
@@ -22,12 +28,12 @@ public class AuthentificationController {
 
   @Autowired
   private AuthService authService;
+  @Autowired
+  private FCMService fcmService;
 
   @PostMapping("/register/medecin")
   @CrossOrigin
-  public ResponseEntity<?> signupMedecin(
-    @RequestBody RegisteMedecinDto registermedecin
-  ) {
+  public ResponseEntity<?> signupMedecin(@RequestBody RegisteMedecinDto registermedecin) {
     try{
       AuthentificationResponse authentificationResponse = authService.signUpMedecin(registermedecin);
       return ResponseEntity.status(OK).body(authentificationResponse);
@@ -54,9 +60,8 @@ public class AuthentificationController {
 
   @PostMapping("/register/citoyen")
   @CrossOrigin
-  public ResponseEntity<AuthentificationResponse> signupCitoyen() {
-
-    return ResponseEntity.status(OK).body(authService.signUpCitoyen());
+  public ResponseEntity<AuthentificationResponse> signupCitoyen(@RequestBody String deviceToken) {
+    return ResponseEntity.status(OK).body(authService.signUpCitoyen(deviceToken));
   }
 
   @PostMapping("/login/medecin")

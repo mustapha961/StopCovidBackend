@@ -1,6 +1,6 @@
 package groupe4pfe.stopcovid.security.jwt;
 
-import groupe4pfe.stopcovid.security.Util.JwtUtil;
+import groupe4pfe.stopcovid.Utils.JwtUtil;
 import groupe4pfe.stopcovid.security.services.CitoyenDetailsServiceImpl;
 import groupe4pfe.stopcovid.security.services.EtablissementDetailsServiceImpl;
 import groupe4pfe.stopcovid.security.services.MedecinDetailsServiceImpl;
@@ -40,16 +40,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String authorizationHeader = request.getHeader("Authorization");
-        String email = null;
-        String jwt = null;
-        String role = null;
-        String id = null;
-        System.out.println(authorizationHeader);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            email = jwtUtil.extractEmail(jwt);
-            id = jwtUtil.extractId(jwt);
-            role = jwtUtil.extractRole(jwt);
+            String jwt = authorizationHeader.substring(7);
+            String email = jwtUtil.extractEmail(jwt);
+            String id = jwtUtil.extractId(jwt);
+            String role = jwtUtil.extractRole(jwt);
 
             if ((email != null || id != null) && role != null ) {
                 UserDetails userDetails = null;
@@ -59,8 +54,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     userDetails = this.citoyenDetailsService.loadUserByUsername(id);
                 } else {
                     userDetails = this.medecinDetailsService.loadUserByUsername(email);
-
                 }
+
                 String aValider = email.equals("") ? id : email;
                 if (jwtUtil.validateToken(aValider, userDetails)) {
 

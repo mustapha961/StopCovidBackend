@@ -1,7 +1,7 @@
 package groupe4pfe.stopcovid.model;
 
 import groupe4pfe.stopcovid.model.indentities.ScanQrCodeMedecinIndentity;
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.*;
 
 @Entity
@@ -15,10 +15,7 @@ public class ScanQRCodeMedecin {
 
   public ScanQRCodeMedecin() {}
 
-  public ScanQRCodeMedecin(
-    ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity,
-    Date date
-  ) {
+  public ScanQRCodeMedecin(ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity, Date date) {
     this.scanQrCodeMedecinIndentity = scanQrCodeMedecinIndentity;
     this.date = date;
   }

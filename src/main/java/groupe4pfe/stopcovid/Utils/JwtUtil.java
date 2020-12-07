@@ -1,4 +1,4 @@
-package groupe4pfe.stopcovid.security.Util;
+package groupe4pfe.stopcovid.Utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -34,8 +34,6 @@ public class JwtUtil {
         String userId = jwt.getClaim("id").asString();
         return userId;
     }
-
-
 
     public String createToken(String email, String id,String role) {
 

@@ -6,7 +6,7 @@ import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.exceptions.LoginException;
 import groupe4pfe.stopcovid.exceptions.RegisterException;
 import groupe4pfe.stopcovid.model.EtatCitoyen;
-import groupe4pfe.stopcovid.security.Util.JwtUtil;
+import groupe4pfe.stopcovid.Utils.JwtUtil;
 import groupe4pfe.stopcovid.dto.RegisteMedecinDto;
 import groupe4pfe.stopcovid.dto.response.AuthentificationResponse;
 import groupe4pfe.stopcovid.model.Citoyen;
@@ -83,9 +83,9 @@ public class AuthService {
     return new AuthentificationResponse(token,etablissement.getEmail(),null);
   }
 
-  public AuthentificationResponse signUpCitoyen(){
+  public AuthentificationResponse signUpCitoyen(String deviceToken){
     UUID id = UUID.randomUUID();
-    Citoyen citoyen = new Citoyen(id, EtatCitoyen.EN_BONNE_SANTE);
+    Citoyen citoyen = new Citoyen(id,deviceToken ,EtatCitoyen.EN_BONNE_SANTE);
     citoyen = citoyenRepository.save(citoyen);
     String token = jwtUtil.createToken("",citoyen.getId().toString(),"citoyen");
     return new AuthentificationResponse(token,null,citoyen.getId().toString());

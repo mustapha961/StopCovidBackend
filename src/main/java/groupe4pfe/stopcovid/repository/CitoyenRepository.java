@@ -14,4 +14,5 @@ public interface CitoyenRepository extends CrudRepository<Citoyen, UUID> {
 
   @Override
   List<Citoyen> findAll();
+
 }

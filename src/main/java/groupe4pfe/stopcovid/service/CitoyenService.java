@@ -4,7 +4,6 @@ import groupe4pfe.stopcovid.dto.response.CitoyenResponse;
 import groupe4pfe.stopcovid.exceptions.CitoyenNotFoundException;
 import groupe4pfe.stopcovid.model.Citoyen;
 import groupe4pfe.stopcovid.repository.CitoyenRepository;
-import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
