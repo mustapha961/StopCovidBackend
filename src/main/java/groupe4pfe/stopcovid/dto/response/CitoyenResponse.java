@@ -1,11 +1,13 @@
 package groupe4pfe.stopcovid.dto.response;
 
+import groupe4pfe.stopcovid.model.EtatCitoyen;
+
 public class CitoyenResponse {
 
     private String UUID;
-    private String etat;
+    private EtatCitoyen etat;
 
-    public CitoyenResponse(String UUID, String etat) {
+    public CitoyenResponse(String UUID, EtatCitoyen etat) {
         this.UUID = UUID;
         this.etat = etat;
     }
@@ -21,11 +23,11 @@ public class CitoyenResponse {
         this.UUID = UUID;
     }
 
-    public String getEtat() {
+    public EtatCitoyen getEtat() {
         return etat;
     }
 
-    public void setEtat(String etat) {
+    public void setEtat(EtatCitoyen etat) {
         this.etat = etat;
     }
 

@@ -21,7 +21,7 @@ public class CitoyenService {
   public CitoyenResponse getCitoyenViaToken(){
     Citoyen citoyen = authService.getCurrentCitoyen();
     if(citoyen != null)
-      return new CitoyenResponse(citoyen.getId().toString(),citoyen.getEtat().getEtat());
+      return new CitoyenResponse(citoyen.getId().toString(),citoyen.getEtat());
     throw new CitoyenNotFoundException("Ce citoyen n'existe pas");
   }
 

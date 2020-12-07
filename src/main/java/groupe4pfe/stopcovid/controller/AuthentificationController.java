@@ -1,7 +1,7 @@
 package groupe4pfe.stopcovid.controller;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import groupe4pfe.stopcovid.Utils.FCMService;
+import groupe4pfe.stopcovid.dto.CitoyenRegisterRequest;
 import groupe4pfe.stopcovid.dto.LoginDto;
 import groupe4pfe.stopcovid.dto.RegisterEtablissementDto;
 import groupe4pfe.stopcovid.dto.RegisteMedecinDto;
@@ -10,14 +10,11 @@ import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.dto.response.ResponseError;
 import groupe4pfe.stopcovid.exceptions.LoginException;
 import groupe4pfe.stopcovid.exceptions.RegisterException;
+import groupe4pfe.stopcovid.model.Citoyen;
 import groupe4pfe.stopcovid.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -46,9 +43,7 @@ public class AuthentificationController {
 
   @PostMapping("/register/etablissement")
   @CrossOrigin
-  public ResponseEntity<?> signupEtablissement(
-          @RequestBody RegisterEtablissementDto registermedecin
-  )
+  public ResponseEntity<?> signupEtablissement(@RequestBody RegisterEtablissementDto registermedecin)
   {
     try{
       AuthentificationResponse authentificationResponse = authService.signUpEtablissement(registermedecin);
@@ -60,8 +55,9 @@ public class AuthentificationController {
 
   @PostMapping("/register/citoyen")
   @CrossOrigin
-  public ResponseEntity<AuthentificationResponse> signupCitoyen(@RequestBody String deviceToken) {
-    return ResponseEntity.status(OK).body(authService.signUpCitoyen(deviceToken));
+  public ResponseEntity<AuthentificationResponse> signupCitoyen(@RequestBody CitoyenRegisterRequest citoyenRegisterRequest) {
+    System.out.println(citoyenRegisterRequest.getDeviceToken());
+    return ResponseEntity.status(OK).body(authService.signUpCitoyen(citoyenRegisterRequest.getDeviceToken()));
   }
 
   @PostMapping("/login/medecin")
@@ -86,7 +82,4 @@ public class AuthentificationController {
       return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
     }
   }
-
-
-
 }

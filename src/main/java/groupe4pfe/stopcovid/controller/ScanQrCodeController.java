@@ -36,7 +36,8 @@ public class ScanQrCodeController {
         QRCodeMedecin qrCodeMedecin;
         if((lieu = lieuxServices.getLieuFromQrCode(qrCode)) != null){
             int nbLieuxVisiteDansLaJournee = lieuxServices.enregistrerCitoyen(lieu);
-            return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("lieu",nbLieuxVisiteDansLaJournee,authService.getCurrentCitoyen()));
+            Citoyen citoyen = authService.getCurrentCitoyen();
+            return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("lieu",nbLieuxVisiteDansLaJournee,citoyen));
         }else if((qrCodeMedecin = qrCodeMedecinService.getQrCodeMedecinFromQrCode(qrCode) )!= null){
             Citoyen citoyen = qrCodeMedecinService.scanQrCodeMedecin(qrCodeMedecin);
             return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("medecin",0,citoyen));
