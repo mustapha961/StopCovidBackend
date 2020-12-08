@@ -78,7 +78,7 @@ public class QRCodeMedecinService {
             Date dateBefore = Date.from(before);
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList = scanQRCodeEtablissementRepository
                     .findAllByCitoyenAndDateEntreeAfter(citoyen,dateBefore);
-            System.out.println(scanQRCodeEtablissementList.get(0).getCitoyen().getDeviceToken());
+
             List<Lieu> lieuVisitesDuCitoyen = scanQRCodeEtablissementList.stream()
                     .map(scanQRCode -> scanQRCode.getLieu() )
                     .collect(Collectors.toList());
@@ -88,6 +88,7 @@ public class QRCodeMedecinService {
 
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList2 = scanQRCodeEtablissementRepository
                     .findAllByLieuInAndDateEntreeBetween(lieuVisitesDuCitoyen,Date.from(before),Date.from(after));
+
             List<Citoyen> citoyensANotifier = scanQRCodeEtablissementList2.stream()
                     .map(scanQRCode -> scanQRCode.getCitoyen()).distinct()
                     .collect(Collectors.toList());
