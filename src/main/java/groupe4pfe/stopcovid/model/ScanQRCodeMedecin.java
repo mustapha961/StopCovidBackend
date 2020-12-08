@@ -24,9 +24,7 @@ public class ScanQRCodeMedecin {
     return scanQrCodeMedecinIndentity;
   }
 
-  public void setScanQrCodeMedecinIndentity(
-    ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity
-  ) {
+  public void setScanQrCodeMedecinIndentity(ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity) {
     this.scanQrCodeMedecinIndentity = scanQrCodeMedecinIndentity;
   }
 

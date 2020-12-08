@@ -100,8 +100,7 @@ public class QRCodeMedecinService {
             citoyen = citoyenRepository.save(citoyen);
             List<String> tokensDevices = citoyensANotifier.stream().map(c->c.getDeviceToken()).collect(Collectors.toList());
             System.out.println(citoyensANotifier);
-            if(tokensDevices.size() > 0)
-                fcmService.sendNotifications(tokensDevices);
+            fcmService.sendNotifications(tokensDevices);
             return citoyen;
 
         }
