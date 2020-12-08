@@ -90,7 +90,8 @@ public class QRCodeMedecinService {
                     .findAllByLieuInAndDateEntreeBetween(lieuVisitesDuCitoyen,Date.from(before),Date.from(after));
 
             List<Citoyen> citoyensANotifier = scanQRCodeEtablissementList2.stream()
-                    .map(scanQRCode -> scanQRCode.getCitoyen()).distinct()
+                    .map(scanQRCode -> scanQRCode.getCitoyen())
+                    .distinct()
                     .collect(Collectors.toList());
 
             citoyensANotifier.forEach(c -> c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE));
