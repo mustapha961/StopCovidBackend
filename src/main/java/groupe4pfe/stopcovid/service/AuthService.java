@@ -45,7 +45,7 @@ public class AuthService {
   ) {
 
     if(emailAlreadyExists(registerRequestMedecinDto.getEmail()))
-      throw new RegisterException("Email already exists");
+      throw new RegisterException("Email déjà utilisé");
 
     String password = passwordEncoder.encode(
       registerRequestMedecinDto.getPassword()
@@ -70,7 +70,7 @@ public class AuthService {
     );
 
     if(emailAlreadyExists(registerRequestEtablissementDto.getEmail()))
-      throw new RegisterException("Email already exists");
+      throw new RegisterException("Email déjà utilisé");
 
     Etablissement etablissement = new Etablissement(
             registerRequestEtablissementDto.getNom(),
@@ -99,7 +99,7 @@ public class AuthService {
       String token = jwtUtil.createToken(medecin.getEmail(), medecin.getId().toString(),"medecin");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("Email or password does not match");
+      throw new LoginException("Email ou mot de passe incorrect");
     }
   }
 
@@ -111,7 +111,7 @@ public class AuthService {
       String token = jwtUtil.createToken(etablissement.getEmail(), etablissement.getId().toString(),"etablissement");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("Email or password does not match");
+      throw new LoginException("Email ou mot de passe incorrect");
     }
   }
 
