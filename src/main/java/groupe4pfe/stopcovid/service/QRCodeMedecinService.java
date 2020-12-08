@@ -4,6 +4,7 @@ import groupe4pfe.stopcovid.Utils.FCMService;
 import groupe4pfe.stopcovid.dto.response.QRCodesMedecinResponse;
 import groupe4pfe.stopcovid.dto.response.ScanResponse;
 import groupe4pfe.stopcovid.exceptions.QRCodeMedecinException;
+import groupe4pfe.stopcovid.exceptions.QrCodeAlreadyScannedException;
 import groupe4pfe.stopcovid.exceptions.UnauthorizeException;
 import groupe4pfe.stopcovid.model.*;
 import groupe4pfe.stopcovid.model.indentities.ScanQrCodeMedecinIndentity;
@@ -67,7 +68,11 @@ public class QRCodeMedecinService {
     public Citoyen scanQrCodeMedecin(QRCodeMedecin qrCodeMedecin){
         Citoyen citoyen = authService.getCurrentCitoyen();
         if(citoyen != null){
-            scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(new ScanQrCodeMedecinIndentity(citoyen,qrCodeMedecin), new Date()));
+            ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity = new ScanQrCodeMedecinIndentity(citoyen,qrCodeMedecin);
+            if(scanQRCodeMedecinRepository.findByScanQrCodeMedecinIndentity(scanQrCodeMedecinIndentity) != null)
+                throw new QrCodeAlreadyScannedException("QR code déjà utilisé veuillez en scanner un autre");
+
+            scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(scanQrCodeMedecinIndentity, new Date()));
             Instant now = Instant.now(); //current date
             Instant before = now.minus(Duration.ofDays(10));
             Date dateBefore = Date.from(before);

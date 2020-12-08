@@ -3,6 +3,7 @@ package groupe4pfe.stopcovid.controller;
 import groupe4pfe.stopcovid.dto.response.CitoyenResponse;
 import groupe4pfe.stopcovid.dto.response.ResponseError;
 import groupe4pfe.stopcovid.dto.response.ScanResponse;
+import groupe4pfe.stopcovid.exceptions.QrCodeAlreadyScannedException;
 import groupe4pfe.stopcovid.model.Citoyen;
 import groupe4pfe.stopcovid.model.Lieu;
 import groupe4pfe.stopcovid.model.QRCodeMedecin;
@@ -39,8 +40,12 @@ public class ScanQrCodeController {
             Citoyen citoyen = authService.getCurrentCitoyen();
             return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("lieu",nbLieuxVisiteDansLaJournee,citoyen));
         }else if((qrCodeMedecin = qrCodeMedecinService.getQrCodeMedecinFromQrCode(qrCode) )!= null){
-            Citoyen citoyen = qrCodeMedecinService.scanQrCodeMedecin(qrCodeMedecin);
-            return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("medecin",0,citoyen));
+            try{
+                Citoyen citoyen = qrCodeMedecinService.scanQrCodeMedecin(qrCodeMedecin);
+                return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("medecin",0,citoyen));
+            }catch (QrCodeAlreadyScannedException e){
+                return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
+            }
         }else{
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseError("QR code inexistant"));
         }
