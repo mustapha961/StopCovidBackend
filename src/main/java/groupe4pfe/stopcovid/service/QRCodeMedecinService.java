@@ -2,7 +2,6 @@ package groupe4pfe.stopcovid.service;
 
 import groupe4pfe.stopcovid.Utils.FCMService;
 import groupe4pfe.stopcovid.dto.response.QRCodesMedecinResponse;
-import groupe4pfe.stopcovid.dto.response.ScanResponse;
 import groupe4pfe.stopcovid.exceptions.QRCodeMedecinException;
 import groupe4pfe.stopcovid.exceptions.QrCodeAlreadyScannedException;
 import groupe4pfe.stopcovid.exceptions.UnauthorizeException;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,16 +83,21 @@ public class QRCodeMedecinService {
                     .map(scanQRCode -> scanQRCode.getLieu() )
                     .collect(Collectors.toList());
 
-            before = now.minus(Duration.ofHours(1));
-            Instant after = now.plus(Duration.ofHours(1));
 
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList2 = scanQRCodeEtablissementRepository
-                    .findAllByLieuInAndDateEntreeBetween(lieuVisitesDuCitoyen,Date.from(before),Date.from(after));
+                    .findAllByLieuIn(lieuVisitesDuCitoyen);
 
-            List<Citoyen> citoyensANotifier = scanQRCodeEtablissementList2.stream()
-                    .map(scanQRCode -> scanQRCode.getCitoyen())
-                    .distinct()
-                    .collect(Collectors.toList());
+            List<Citoyen> citoyensANotifier = new ArrayList<Citoyen>();
+
+            for(ScanQRCodeEtablissement scanEtaContamine : scanQRCodeEtablissementList){
+                for(ScanQRCodeEtablissement scanEta : scanQRCodeEtablissementList2){
+                    if(scanEta.getLieu().equals(scanEtaContamine.getLieu())){
+                        if(aEteEnContact(scanEta.getDate_entree(),scanEtaContamine.getDate_entree())){
+                            citoyensANotifier.add(scanEta.getCitoyen());
+                        }
+                    }
+                }
+            }
 
             citoyensANotifier.forEach(c -> c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE));
             citoyensANotifier.remove(citoyen);
@@ -103,10 +108,24 @@ public class QRCodeMedecinService {
             System.out.println(citoyensANotifier);
             fcmService.sendNotifications(tokensDevices);
             return citoyen;
-
         }
 
         throw new UnauthorizeException("Vous n' y avez pas accés");
+    }
+
+    private boolean aEteEnContact(Date d1, Date d2) {
+        long difference_In_Time = d2.getTime() - d1.getTime();
+        if(difference_In_Time <=0 ){
+            Date temp = d1;
+            d1 = d2;
+            d2 = temp;
+            difference_In_Time = d2.getTime() - d1.getTime();
+        }
+        long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
+        long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
+        if(difference_In_Days <= 10 && difference_In_Hours <=1)
+            return true;
+        return false;
     }
 
 

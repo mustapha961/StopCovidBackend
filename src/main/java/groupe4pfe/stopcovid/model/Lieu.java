@@ -1,6 +1,7 @@
 package groupe4pfe.stopcovid.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -72,13 +73,15 @@ public class Lieu {
   }
 
   @Override
-  public String toString() {
-    return "Lieu{" +
-            "id=" + id +
-            ", nom='" + nom + '\'' +
-            ", description='" + description + '\'' +
-            ", etablissement=" + etablissement.getId() +
-            ", qrCode='" + qrCode + '\'' +
-            '}';
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Lieu lieu = (Lieu) o;
+    return getId().equals(lieu.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId());
   }
 }

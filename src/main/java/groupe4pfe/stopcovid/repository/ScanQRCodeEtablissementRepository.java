@@ -16,6 +16,6 @@ public interface ScanQRCodeEtablissementRepository extends CrudRepository<ScanQR
 
     List<ScanQRCodeEtablissement> findAllByCitoyenAndDateEntreeAfter(Citoyen citoyen,Date date);
 
-    List<ScanQRCodeEtablissement> findAllByLieuInAndDateEntreeBetween(List<Lieu> lieux,Date date1,Date date2);
+    List<ScanQRCodeEtablissement> findAllByLieuIn (List<Lieu> lieux);
 
 }
