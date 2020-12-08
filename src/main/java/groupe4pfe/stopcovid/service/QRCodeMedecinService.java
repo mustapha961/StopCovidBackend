@@ -78,7 +78,7 @@ public class QRCodeMedecinService {
             Date dateBefore = Date.from(before);
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList = scanQRCodeEtablissementRepository
                     .findAllByCitoyenAndDateEntreeAfter(citoyen,dateBefore);
-
+            System.out.println(scanQRCodeEtablissementList.get(0).getCitoyen().getDeviceToken());
             List<Lieu> lieuVisitesDuCitoyen = scanQRCodeEtablissementList.stream()
                     .map(scanQRCode -> scanQRCode.getLieu() )
                     .collect(Collectors.toList());
@@ -98,6 +98,7 @@ public class QRCodeMedecinService {
             citoyen.setEtat(EtatCitoyen.MALADE);
             citoyen = citoyenRepository.save(citoyen);
             List<String> tokensDevices = citoyensANotifier.stream().map(c->c.getDeviceToken()).collect(Collectors.toList());
+            System.out.println(citoyensANotifier);
             if(tokensDevices.size() > 0)
                 fcmService.sendNotifications(tokensDevices);
             return citoyen;
