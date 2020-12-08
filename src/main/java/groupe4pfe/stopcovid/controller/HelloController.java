@@ -16,13 +16,11 @@ public class HelloController {
 
   @Autowired
   private AuthService authService;
-  @Value("${appli.test}")
-  private String test;
 
   @GetMapping("/env")
   @CrossOrigin
   public String test3() {
     Map<String, String> env = System.getenv();
-    return env.get("env") + " ENVIRONMENT "+test;
+    return env.get("env") + " ENVIRONMENT ";
   }
 }
