@@ -99,14 +99,16 @@ public class QRCodeMedecinService {
                 }
             }
 
-            citoyensANotifier.forEach(c -> c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE));
             citoyensANotifier.remove(citoyen);
+            citoyensANotifier.forEach(c -> c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE));
             citoyenRepository.saveAll(citoyensANotifier);
             citoyen.setEtat(EtatCitoyen.MALADE);
             citoyen = citoyenRepository.save(citoyen);
             List<String> tokensDevices = citoyensANotifier.stream().map(c->c.getDeviceToken()).collect(Collectors.toList());
-            System.out.println(citoyensANotifier);
-            fcmService.sendNotifications(tokensDevices);
+
+
+            if(tokensDevices.size() > 0)
+                fcmService.sendNotifications(tokensDevices);
             return citoyen;
         }
 

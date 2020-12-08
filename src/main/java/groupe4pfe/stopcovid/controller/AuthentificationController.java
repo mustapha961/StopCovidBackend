@@ -56,7 +56,6 @@ public class AuthentificationController {
   @PostMapping("/register/citoyen")
   @CrossOrigin
   public ResponseEntity<AuthentificationResponse> signupCitoyen(@RequestBody CitoyenRegisterRequest citoyenRegisterRequest) {
-    System.out.println(citoyenRegisterRequest.getDeviceToken());
     return ResponseEntity.status(OK).body(authService.signUpCitoyen(citoyenRegisterRequest.getDeviceToken()));
   }
 

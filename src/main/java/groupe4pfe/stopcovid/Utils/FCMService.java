@@ -14,6 +14,7 @@ public class FCMService {
     private FirebaseMessaging firebaseMessaging;
 
     public void sendNotifications(List<String> tokens) {
+
         MulticastMessage message = MulticastMessage.builder()
                 .setNotification(Notification.builder()
                         .setTitle("BlockCovid")

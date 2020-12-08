@@ -85,6 +85,8 @@ public class AuthService {
 
   public AuthentificationResponse signUpCitoyen(String deviceToken){
     UUID id = UUID.randomUUID();
+    System.out.println("--------------------------------");
+    System.out.println(deviceToken);
     Citoyen citoyen = new Citoyen(id,deviceToken ,EtatCitoyen.EN_BONNE_SANTE);
     citoyen = citoyenRepository.save(citoyen);
     String token = jwtUtil.createToken("",citoyen.getId().toString(),"citoyen");
