@@ -1,6 +1,10 @@
 package groupe4pfe.stopcovid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CitoyenRegisterRequest {
+
+    @JsonProperty(required = true)
     String deviceToken;
 
     public CitoyenRegisterRequest() {

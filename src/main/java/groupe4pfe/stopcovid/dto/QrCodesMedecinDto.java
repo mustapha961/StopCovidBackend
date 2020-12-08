@@ -1,6 +1,10 @@
 package groupe4pfe.stopcovid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class QrCodesMedecinDto {
+
+    @JsonProperty(required = true)
     private String nbrQRCode;
 
     public QrCodesMedecinDto(){

@@ -1,8 +1,12 @@
 package groupe4pfe.stopcovid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LieuDto {
 
+    @JsonProperty(required = true)
     private String nom;
+    @JsonProperty(required = true)
     private String description;
 
     public LieuDto(String nom, String description) {

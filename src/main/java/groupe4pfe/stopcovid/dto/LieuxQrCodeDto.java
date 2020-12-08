@@ -1,12 +1,15 @@
 package groupe4pfe.stopcovid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.beans.factory.annotation.Value;
 
 
 public class LieuxQrCodeDto {
 
     private Long id;
+    @JsonProperty(required = true)
     private String nom;
+    @JsonProperty(required = true)
     private String description;
     private String qrCode;
 

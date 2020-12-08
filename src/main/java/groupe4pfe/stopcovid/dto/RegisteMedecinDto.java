@@ -1,10 +1,16 @@
 package groupe4pfe.stopcovid.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class RegisteMedecinDto {
 
+  @JsonProperty(required = true)
   private String nom;
+  @JsonProperty(required = true)
   private String prenom;
+  @JsonProperty(required = true)
   private String email;
+  @JsonProperty(required = true)
   private String password;
 
   public RegisteMedecinDto() {}
