@@ -1,6 +1,5 @@
 package groupe4pfe.stopcovid.service;
 
-import groupe4pfe.stopcovid.Utils.FCMService;
 import groupe4pfe.stopcovid.dto.response.QRCodesMedecinResponse;
 import groupe4pfe.stopcovid.exceptions.QRCodeMedecinException;
 import groupe4pfe.stopcovid.exceptions.QrCodeAlreadyScannedException;
@@ -12,12 +11,12 @@ import groupe4pfe.stopcovid.repository.QRCodeMedecinRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeEtablissementRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeMedecinRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +39,10 @@ public class QRCodeMedecinService {
     private AuthService authService;
     @Autowired
     private FCMService fcmService;
-
+    @Value("${config.nbJours}")
+    private int nbJours;
+    @Value("${config.nbHeuresContact}")
+    private int nbHeuresContact;
 
     @Transactional
     public List<QRCodesMedecinResponse> addQRCodesMedecin(String nbrQRCode){
@@ -70,11 +72,16 @@ public class QRCodeMedecinService {
         if(citoyen != null){
             ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity = new ScanQrCodeMedecinIndentity(citoyen,qrCodeMedecin);
             if(scanQRCodeMedecinRepository.findByScanQrCodeMedecinIndentity(scanQrCodeMedecinIndentity) != null)
-                throw new QrCodeAlreadyScannedException("QR code déjà utilisé veuillez en scanner un autre");
+                throw new QrCodeAlreadyScannedException("Vous avez déjà scanné ce QR Code");
 
-            scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(scanQrCodeMedecinIndentity, new Date()));
+            try {
+                scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(scanQrCodeMedecinIndentity, new Date()));
+            }catch (Exception e){
+                throw new QrCodeAlreadyScannedException("Ce QR code a déjà été scanné par quelqu'un d'autre");
+            }
+
             Instant now = Instant.now(); //current date
-            Instant before = now.minus(Duration.ofDays(10));
+            Instant before = now.minus(Duration.ofDays(nbJours));
             Date dateBefore = Date.from(before);
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList = scanQRCodeEtablissementRepository
                     .findAllByCitoyenAndDateEntreeAfter(citoyen,dateBefore);
@@ -82,7 +89,6 @@ public class QRCodeMedecinService {
             List<Lieu> lieuVisitesDuCitoyen = scanQRCodeEtablissementList.stream()
                     .map(scanQRCode -> scanQRCode.getLieu() )
                     .collect(Collectors.toList());
-
 
             List<ScanQRCodeEtablissement> scanQRCodeEtablissementList2 = scanQRCodeEtablissementRepository
                     .findAllByLieuIn(lieuVisitesDuCitoyen);
@@ -104,8 +110,8 @@ public class QRCodeMedecinService {
             citoyenRepository.saveAll(citoyensANotifier);
             citoyen.setEtat(EtatCitoyen.MALADE);
             citoyen = citoyenRepository.save(citoyen);
-            List<String> tokensDevices = citoyensANotifier.stream().map(c->c.getDeviceToken()).collect(Collectors.toList());
 
+            List<String> tokensDevices = citoyensANotifier.stream().map(c->c.getDeviceToken()).collect(Collectors.toList());
 
             if(tokensDevices.size() > 0)
                 fcmService.sendNotifications(tokensDevices);
@@ -117,7 +123,7 @@ public class QRCodeMedecinService {
 
     private boolean aEteEnContact(Date d1, Date d2) {
         long difference_In_Time = d2.getTime() - d1.getTime();
-        if(difference_In_Time <=0 ){
+        if(difference_In_Time < 0 ){
             Date temp = d1;
             d1 = d2;
             d2 = temp;
@@ -125,7 +131,7 @@ public class QRCodeMedecinService {
         }
         long difference_In_Hours = (difference_In_Time / (1000 * 60 * 60)) % 24;
         long difference_In_Days = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365;
-        if(difference_In_Days <= 10 && difference_In_Hours <=1)
+        if(difference_In_Days <= nbJours && difference_In_Hours <=nbHeuresContact)
             return true;
         return false;
     }

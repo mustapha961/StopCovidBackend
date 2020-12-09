@@ -68,15 +68,21 @@ public class LieuxServices {
             ScanQRCodeEtablissement scanQRCodeEtablissement = scanQRCodeEtablissementRepository
                     .save(new ScanQRCodeEtablissement(currentDate,lieu,citoyen));
 
-            Date startOfTheDay = getStartOfDay(currentDate);
-            Date endOfTheDay = getEndOfDay(currentDate);
-            return scanQRCodeEtablissementRepository.countByCitoyenAndDateEntreeBetween(citoyen,startOfTheDay,endOfTheDay);
+
+            return countNbLieuxvisiteDansLaJournee(citoyen,currentDate);
 
 
         }
         throw new UnauthorizeException("Vous n'avez pas le droit de réaliser ce type d'action");
 
     }
+
+    public int countNbLieuxvisiteDansLaJournee(Citoyen citoyen,Date currentDate){
+        Date startOfTheDay = getStartOfDay(currentDate);
+        Date endOfTheDay = getEndOfDay(currentDate);
+        return scanQRCodeEtablissementRepository.countByCitoyenAndDateEntreeBetween(citoyen,startOfTheDay,endOfTheDay);
+    }
+
 
     private Date getStartOfDay(Date date) {
         ZoneId defaultZoneId = ZoneId.systemDefault();

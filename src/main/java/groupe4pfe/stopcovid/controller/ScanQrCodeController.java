@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,7 +43,10 @@ public class ScanQrCodeController {
         }else if((qrCodeMedecin = qrCodeMedecinService.getQrCodeMedecinFromQrCode(qrCode) )!= null){
             try{
                 Citoyen citoyen = qrCodeMedecinService.scanQrCodeMedecin(qrCodeMedecin);
-                return ResponseEntity.status(HttpStatus.OK).body(new ScanResponse("medecin",0,citoyen));
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new ScanResponse("medecin",
+                                lieuxServices.countNbLieuxvisiteDansLaJournee(citoyen,new Date()),
+                                citoyen));
             }catch (QrCodeAlreadyScannedException e){
                 return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
             }

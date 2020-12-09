@@ -1,4 +1,4 @@
-package groupe4pfe.stopcovid.Utils;
+package groupe4pfe.stopcovid.service;
 
 import com.google.firebase.messaging.*;
 import org.springframework.beans.factory.annotation.Autowired;

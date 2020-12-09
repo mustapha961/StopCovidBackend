@@ -1,6 +1,6 @@
 package groupe4pfe.stopcovid.controller;
 
-import groupe4pfe.stopcovid.Utils.FCMService;
+import groupe4pfe.stopcovid.service.FCMService;
 import groupe4pfe.stopcovid.dto.CitoyenRegisterRequest;
 import groupe4pfe.stopcovid.dto.LoginDto;
 import groupe4pfe.stopcovid.dto.RegisterEtablissementDto;
@@ -10,7 +10,6 @@ import groupe4pfe.stopcovid.dto.response.LoginResponse;
 import groupe4pfe.stopcovid.dto.response.ResponseError;
 import groupe4pfe.stopcovid.exceptions.LoginException;
 import groupe4pfe.stopcovid.exceptions.RegisterException;
-import groupe4pfe.stopcovid.model.Citoyen;
 import groupe4pfe.stopcovid.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +34,8 @@ public class AuthentificationController {
       AuthentificationResponse authentificationResponse = authService.signUpMedecin(registermedecin);
       return ResponseEntity.status(OK).body(authentificationResponse);
     }catch (RegisterException e){
-      return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
+      return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
     }
-
-
   }
 
   @PostMapping("/register/etablissement")
@@ -49,7 +46,7 @@ public class AuthentificationController {
       AuthentificationResponse authentificationResponse = authService.signUpEtablissement(registermedecin);
       return ResponseEntity.status(OK).body(authentificationResponse);
     }catch (RegisterException e){
-      return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
+      return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
     }
   }
 
@@ -66,7 +63,7 @@ public class AuthentificationController {
       LoginResponse loginResponse =authService.loginMedecin(loginRequest);
       return ResponseEntity.status(OK).body(loginResponse);
     }catch (LoginException e){
-      return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
+      return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
     }
 
   }
@@ -78,7 +75,7 @@ public class AuthentificationController {
       LoginResponse loginResponse = authService.loginEtablissement(loginRequest);
       return ResponseEntity.status(OK).body(authService.loginEtablissement(loginRequest));
     }catch (LoginException e){
-      return ResponseEntity.status(UNAUTHORIZED).body(new ResponseError(e.getMessage()));
+      return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
     }
   }
 }
