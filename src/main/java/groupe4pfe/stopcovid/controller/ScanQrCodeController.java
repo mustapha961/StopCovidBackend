@@ -47,8 +47,8 @@ public class ScanQrCodeController {
                         .body(new ScanResponse("medecin",
                                 lieuxServices.countNbLieuxvisiteDansLaJournee(citoyen,new Date()),
                                 citoyen));
-            }catch (QrCodeAlreadyScannedException e){
-                return ResponseEntity.status(400).body(new ResponseError(e.getMessage()));
+            }catch (Exception e){
+                return ResponseEntity.status(400).body(new ResponseError("QR code déjà scanné par quelqu'un"));
             }
         }else{
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseError("QR code inexistant"));

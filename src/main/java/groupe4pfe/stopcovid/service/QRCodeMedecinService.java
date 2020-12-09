@@ -10,11 +10,13 @@ import groupe4pfe.stopcovid.repository.CitoyenRepository;
 import groupe4pfe.stopcovid.repository.QRCodeMedecinRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeEtablissementRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeMedecinRepository;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -67,18 +69,15 @@ public class QRCodeMedecinService {
     }
 
     @Transactional
-    public Citoyen scanQrCodeMedecin(QRCodeMedecin qrCodeMedecin){
+    public Citoyen scanQrCodeMedecin(QRCodeMedecin qrCodeMedecin) {
         Citoyen citoyen = authService.getCurrentCitoyen();
         if(citoyen != null){
             ScanQrCodeMedecinIndentity scanQrCodeMedecinIndentity = new ScanQrCodeMedecinIndentity(citoyen,qrCodeMedecin);
             if(scanQRCodeMedecinRepository.findByScanQrCodeMedecinIndentity(scanQrCodeMedecinIndentity) != null)
                 throw new QrCodeAlreadyScannedException("Vous avez déjà scanné ce QR Code");
 
-            try {
-                scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(scanQrCodeMedecinIndentity, new Date()));
-            }catch (Exception e){
-                throw new QrCodeAlreadyScannedException("Ce QR code a déjà été scanné par quelqu'un d'autre");
-            }
+            scanQRCodeMedecinRepository.save(new ScanQRCodeMedecin(scanQrCodeMedecinIndentity, new Date()));
+
 
             Instant now = Instant.now(); //current date
             Instant before = now.minus(Duration.ofDays(nbJours));

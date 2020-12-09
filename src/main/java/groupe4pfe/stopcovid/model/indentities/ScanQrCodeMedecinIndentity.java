@@ -61,13 +61,12 @@ public class ScanQrCodeMedecinIndentity implements Serializable {
     if (o == null || getClass() != o.getClass()) return false;
     ScanQrCodeMedecinIndentity that = (ScanQrCodeMedecinIndentity) o;
     return (
-      getCitoyenId().equals(that.getCitoyenId()) &&
       getQrCodeMedecinId().equals(that.getQrCodeMedecinId())
     );
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getCitoyenId(), getQrCodeMedecinId());
+    return Objects.hash(getQrCodeMedecinId());
   }
 }
