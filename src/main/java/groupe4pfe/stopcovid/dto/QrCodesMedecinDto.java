@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class QrCodesMedecinDto {
 
-    @JsonProperty(required = true)
+    @JsonProperty(required = true,defaultValue = "1")
     private String nbrQRCode;
 
     public QrCodesMedecinDto(){
