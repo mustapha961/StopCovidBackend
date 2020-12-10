@@ -44,7 +44,7 @@ public class AuthService {
   ) {
 
     if(emailAlreadyExists(registerRequestMedecinDto.getEmail()))
-      throw new RegisterException("Email déjà utilisé");
+      throw new RegisterException("adresse mail déjà utilisé");
 
     String password = passwordEncoder.encode(
       registerRequestMedecinDto.getPassword()
@@ -69,7 +69,7 @@ public class AuthService {
     );
 
     if(emailAlreadyExists(registerRequestEtablissementDto.getEmail()))
-      throw new RegisterException("Email déjà utilisé");
+      throw new RegisterException("adresse mail déjà utilisé");
 
     Etablissement etablissement = new Etablissement(
             registerRequestEtablissementDto.getNom(),
@@ -92,25 +92,25 @@ public class AuthService {
 
   public LoginResponse loginMedecin(LoginDto loginRequest){
 
-    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'email et/ou le mot de passe sont invalides"));
+    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont invalides"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),medecin.getMot_de_passe())){
       String token = jwtUtil.createToken(medecin.getEmail(), medecin.getId().toString(),"medecin");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("Email ou mot de passe incorrect");
+      throw new LoginException("adresse mail ou mot de passe incorrect");
     }
   }
 
   public LoginResponse loginEtablissement(LoginDto loginRequest){
 
-    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'email et/ou le mot de passe sont invalides"));
+    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont invalides"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),etablissement.getMot_de_passe())){
       String token = jwtUtil.createToken(etablissement.getEmail(), etablissement.getId().toString(),"etablissement");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("Email ou mot de passe incorrect");
+      throw new LoginException("adresse mail ou mot de passe incorrect");
     }
   }
 
