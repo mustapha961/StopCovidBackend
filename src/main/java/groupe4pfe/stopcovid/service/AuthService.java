@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class AuthService {
 
   @Autowired
@@ -85,8 +84,6 @@ public class AuthService {
 
   public AuthentificationResponse signUpCitoyen(String deviceToken){
     UUID id = UUID.randomUUID();
-    System.out.println("--------------------------------");
-    System.out.println(deviceToken);
     Citoyen citoyen = new Citoyen(id,deviceToken ,EtatCitoyen.EN_BONNE_SANTE);
     citoyen = citoyenRepository.save(citoyen);
     String token = jwtUtil.createToken("",citoyen.getId().toString(),"citoyen");
@@ -95,7 +92,7 @@ public class AuthService {
 
   public LoginResponse loginMedecin(LoginDto loginRequest){
 
-    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("Email or password does not match"));
+    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'email et/ou le mot de passe sont invalides"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),medecin.getMot_de_passe())){
       String token = jwtUtil.createToken(medecin.getEmail(), medecin.getId().toString(),"medecin");
@@ -107,7 +104,7 @@ public class AuthService {
 
   public LoginResponse loginEtablissement(LoginDto loginRequest){
 
-    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("Email or password does not match"));
+    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'email et/ou le mot de passe sont invalides"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),etablissement.getMot_de_passe())){
       String token = jwtUtil.createToken(etablissement.getEmail(), etablissement.getId().toString(),"etablissement");
