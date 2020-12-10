@@ -92,25 +92,25 @@ public class AuthService {
 
   public LoginResponse loginMedecin(LoginDto loginRequest){
 
-    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont invalides"));
+    Medecin medecin = medecinRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont incorrect"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),medecin.getMot_de_passe())){
       String token = jwtUtil.createToken(medecin.getEmail(), medecin.getId().toString(),"medecin");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("adresse mail ou mot de passe incorrect");
+      throw new LoginException("adresse mail et/ou mot de passe incorrect");
     }
   }
 
   public LoginResponse loginEtablissement(LoginDto loginRequest){
 
-    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont invalides"));
+    Etablissement etablissement = etablissementRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new LoginException("L'adresse mail et/ou le mot de passe sont incorrect"));
 
     if(passwordEncoder.matches(loginRequest.getPassword(),etablissement.getMot_de_passe())){
       String token = jwtUtil.createToken(etablissement.getEmail(), etablissement.getId().toString(),"etablissement");
       return new LoginResponse(token);
     }else{
-      throw new LoginException("adresse mail ou mot de passe incorrect");
+      throw new LoginException("adresse mail et/ou mot de passe incorrect");
     }
   }
 
