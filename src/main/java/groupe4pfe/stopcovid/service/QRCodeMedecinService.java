@@ -10,13 +10,11 @@ import groupe4pfe.stopcovid.repository.CitoyenRepository;
 import groupe4pfe.stopcovid.repository.QRCodeMedecinRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeEtablissementRepository;
 import groupe4pfe.stopcovid.repository.ScanQRCodeMedecinRepository;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -105,7 +103,10 @@ public class QRCodeMedecinService {
             }
 
             citoyensANotifier.remove(citoyen);
-            citoyensANotifier.forEach(c -> c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE));
+            citoyensANotifier.forEach(c -> {
+                if(!c.getEtat().equals(EtatCitoyen.MALADE))
+                    c.setEtat(EtatCitoyen.POTENTIELLEMENT_MALADE);
+            });
             citoyenRepository.saveAll(citoyensANotifier);
             citoyen.setEtat(EtatCitoyen.MALADE);
             citoyen = citoyenRepository.save(citoyen);
