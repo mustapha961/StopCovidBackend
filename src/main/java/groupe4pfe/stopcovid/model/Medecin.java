@@ -12,13 +12,13 @@ public class Medecin {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
+  @Column(nullable = false)
   private String nom;
-
+  @Column(nullable = false)
   private String prenom;
-
+  @Column(nullable = false)
   private String email;
-
+  @Column(nullable = false)
   private String mot_de_passe;
 
   public Medecin(String nom, String prenom, String email, String mot_de_passe) {

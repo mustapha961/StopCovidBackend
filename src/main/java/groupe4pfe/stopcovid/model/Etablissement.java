@@ -12,12 +12,13 @@ public class Etablissement {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(nullable = false)
   private String nom;
-
+  @Column(nullable = false)
   private String adresse;
-
+  @Column(nullable = false)
   private String email;
-
+  @Column(nullable = false)
   private String mot_de_passe;
 
   public Etablissement(

@@ -18,7 +18,7 @@ public class QRCodeMedecin {
     nullable = false
   )
   private Medecin medecin;
-
+  @Column(nullable = false)
   private String contenu;
 
   public QRCodeMedecin() {}

@@ -11,15 +11,15 @@ public class Lieu {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
+  @Column(nullable = false)
   private String nom;
-
+  @Column(nullable = false)
   private String description;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "etablissements_id", nullable = false)
   private Etablissement etablissement;
-
+  @Column(nullable = false)
   private String qrCode;
 
   public Lieu(Etablissement etablissement, String nom, String description, String qrCode) {

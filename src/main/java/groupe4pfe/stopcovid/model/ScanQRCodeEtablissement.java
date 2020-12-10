@@ -13,6 +13,7 @@ public class ScanQRCodeEtablissement {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
+  @Column(nullable = false)
   private Date dateEntree;
 
   @ManyToOne
